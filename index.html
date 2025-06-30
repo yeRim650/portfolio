@@ -1290,24 +1290,57 @@
                             <span class="tech-tag">Docker</span>
                             <span class="tech-tag">GitHub Actions</span>
                         </div>
-                        <p style="color: #4a5568; margin-bottom: 15px;">
-                            확장 가능한 마이크로서비스 아키텍처 기반의 <strong style="color: #2d3748;">RAG(Retrieval-Augmented Generation)</strong> 시스템을 구성해, 
+            <p style="color: #4a5568; margin-bottom: 15px;">
+                확장 가능한 마이크로서비스 아키텍처 기반의 <strong style="color: #2d3748;">RAG(Retrieval-Augmented Generation)</strong> 시스템을 구성해, 
                             사용자의 냉장고 재료에 맞춰 <strong>맞춤형 레시피를 추천</strong>하는 AI 챗봇 백엔드 프로토타입을 개발했습니다.
-                        </p>
-                        <ul style="color: #4a5568; margin-bottom: 20px; padding-left: 20px; list-style: disc;">
+                </p>
+            <ul style="color: #4a5568; margin-bottom: 20px; padding-left: 20px; list-style: disc;">
                             <li>KoSimCSE-bert 기반 의미 임베딩 + Qdrant 유사도 검색 + OpenAI 생성형 응답 구성</li>
                             <li>FastAPI 기반 REST API, Next.js 기반 UI, MySQL 데이터 연동 구조 설계</li>
-                            <li><strong>Docker & Docker Compose</strong>로 마이크로서비스 개발 및 배포 환경 구성</li>
-                            <li><strong>GitHub Actions로 Docker 이미지 자동 빌드 및 Docker Hub 푸시 구현</strong></li>
-                        </ul>
+                    <li><strong>Docker & Docker Compose</strong>로 마이크로서비스 개발 및 배포 환경 구성</li>
+                    <li><strong>GitHub Actions로 Docker 이미지 자동 빌드 및 Docker Hub 푸시 구현</strong></li>
+            </ul>
+            <!-- FastAPI 선택 이유 -->
+            <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                <h4 style="color: #0369a1; margin-bottom: 10px; font-size: 0.9rem;">FastAPI 선택 이유</h4>
+                <p style="color: #0c4a6e; font-size: 0.85rem; line-height: 1.6;">
+                    FastAPI를 기반으로 AI 연동, 비동기 최적화, 구조적 라우팅 설계를 적용해 향후 Java 마이크로서비스 확장까지 고려한 백엔드 시스템 구현
+                </p>
+            </div>
+
+            <!-- 문제 해결 사례 1 -->
+            <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+                <h4 style="color: #92400e; margin-bottom: 8px; font-size: 0.9rem;">🔧 Docker 환경 연결 문제</h4>
+                <div style="font-size: 0.8rem; line-height: 1.5;">
+                    <p style="color: #dc2626; margin-bottom: 5px;"><strong>문제:</strong> 도커 환경에서 서비스 간 연결 및 환경 변수 충돌로 API 통신 실패 발생</p>
+                    <p style="color: #ea580c; margin-bottom: 5px;"><strong>원인:</strong> 로컬과 도커 환경 간 주소(localhost vs 컨테이너명) 및 변수 처리 방식 차이</p>
+                    <p style="color: #059669; margin-bottom: 5px;"><strong>해결:</strong> 환경별 .env 분리 및 Docker Compose에서 네트워크 기반 주소 설정 적용</p>
+                    <p style="color: #0369a1;"><strong>결과:</strong> 환경별 충돌 없이 안정적인 서비스 연결 확보 및 Docker 이미지 빌드/푸시 자동화(CI) 구축 성공</p>
+                </div>
+            </div>
+
+            <!-- 문제 해결 사례 2 -->
+            <div style="background: #ecfdf5; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+                <h4 style="color: #047857; margin-bottom: 8px; font-size: 0.9rem;">🔧 비동기 처리 최적화</h4>
+                <div style="font-size: 0.8rem; line-height: 1.5;">
+                    <p style="color: #dc2626; margin-bottom: 5px;"><strong>문제:</strong> 기존 RAG API에서 OpenAI API 호출이 동기식으로 처리되어 블로킹 발생</p>
+                    <p style="color: #059669; margin-bottom: 8px;"><strong>해결:</strong></p>
+                    <ul style="margin-left: 15px; margin-bottom: 8px; color: #059669;">
+                        <li><code>openai.OpenAI</code> → <code>openai.AsyncOpenAI</code>로 클라이언트 변경</li>
+                        <li><code>generate_llm_recommendations()</code> 함수를 <code>async/await</code> 패턴으로 변경</li>
+                        <li><code>/api/rag/recommend</code> 엔드포인트 비동기화</li>
+                    </ul>
+                    <p style="color: #0369a1;"><strong>결과:</strong> OpenAI API 응답 대기 중에도 다른 요청들이 차단되지 않아 전체적인 응답성 개선</p>
+                </div>
+            </div>
                         <p style="margin-top: 10px;">
                             🔗 <a href="https://github.com/yeRim650/my-recipe-app" target="_blank" style="color: #3182ce; font-weight: 600;">
                                 GitHub Repository 보기
                             </a>
                         </p>
-                    </div>
-                </div>
-            </section>
+        </div>
+    </div>
+</section>
 
             <!-- Certifications -->
             <section id="certifications" class="section fade-in">
